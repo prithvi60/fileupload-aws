@@ -32,30 +32,43 @@ function App() {
 
   return (
     <div className="App">
-      {objects.map((o) => {
-        // Split the date string into an array of strings, using whitespace as the delimiter.
+      <h2>Design Files from Customers</h2>
+       <table>
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Upload Date</th>
+          <th>File Size</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {objects.map((o) => {
+
+                  // Split the date string into an array of strings, using whitespace as the delimiter.
 const dateParts = String(o.LastModified).split(/\s+/);
 
 // Get the day, month, and year from the date parts.
 const day = dateParts[2];
 const month = dateParts[1];
 const year = dateParts[3];
-
-        return <div  key={o.ETag}>
-        <div>{o.Key}</div>
-        <div >{`${day} ${month} ${year}`}</div>
-        <div >{o.Size}</div>
-        <a 
+         return <tr key={o.ETag}>
+            <td>{o.Key}</td>
+            <td>{`${day} ${month} ${year}`}</td>
+            <td>{o.Size}Kb</td>
+            <td><button>
+            <a 
         target="blank"
         href={
           `https://theprintguy-customerfiles.s3.ap-south-1.amazonaws.com/${o.Key}`
         } >Download</a>
-
-        </div>
+              </button></td>
+          </tr>
 })}
+      </tbody>
+    </table>
     </div>
   );
 }
 
 export default App;
-// snippet-end:[javascript.v3.scenarios.web.ListObjects]
