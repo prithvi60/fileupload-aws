@@ -54,7 +54,27 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+.specs{
+  font-size: x-small;
+  text-align: left;
+  min-width: 20vw;
+  padding-left: 8vw;
+  text-transform: capitalize;
 
+}
+table {
+  width: 100%; /* Set the table width as needed */
+  border-collapse: collapse; /* Optional: Combine border spacing into a single border */
+  overflow-x: auto; /* Enable horizontal scrolling if the content overflows */
+}
+
+td,th{
+  max-width: max-content;
+}
+th,td{
+  border-bottom: .5px solid black;
+  
+}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

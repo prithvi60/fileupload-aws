@@ -32,6 +32,11 @@ function App() {
     });
     client.send(command).then(({ Contents }) => setObjects(Contents || []));
   }, []);
+  // useEffect(()=>{
+  //   let tableContainer = document.getElementById('tableContainer');
+  //   if(tableContainer)
+  //   tableContainer.scrollLeft = tableContainer.scrollWidth;
+  // },[])
   // const getCustomerInfo= async (id: string) => {
   //   // console.log("test price deets",id)
   //   const username ="fd829fb1b82ee954210c08ffa03c3746";
@@ -100,12 +105,13 @@ function App() {
   return (
     <div className="App">
       <h2>Design Files from Customers</h2>
-      <table>
+      <table id="tableContainer">
         <thead>
           <tr>
           <th>Customer Name</th>
           {/* <th>Contact Info</th> */}
             <th>Product Name</th>
+            <th>Configuration</th>
             <th>Upload Date</th>
             <th>File Size</th>
             <th>Action</th>
@@ -118,7 +124,8 @@ function App() {
 }).map((o) => {
             // Split the date string into an array of strings, using whitespace as the delimiter.
             const dateParts = String(o.LastModified).split(/\s+/);
-            // console.log("data",o.LastModified)
+            const specs= o.Key?.split("Specs:")[1]?.split(".")[0]?.split(",")
+            // console.log("data",specs)
 
             // Get the day, month, and year from the date parts.
             const day = dateParts[2];
@@ -129,10 +136,10 @@ function App() {
           // const customer=await getCustomerInfo(id);
             return (
               <tr key={o.ETag}>
-                <td>{o.Key?.split("-")[0]}</td>
+                <td style={{fontWeight:"bold"}}>{o.Key?.split("-")[0]}</td>
                 {/* <td>{o.Key}</td> */}
-                <td>{o.Key?.split("-")[1]?.split(".")[0]}</td>
-
+                <td style={{fontSize:"small"}}>{o.Key?.split("-")[1]?.split(".")[0]}</td>
+                <td>{specs?.map((item,idx)=><li className={"specs"} key={idx}>{item.split("-")[0]} - <span style={{fontWeight:"bold"}}>{item.split("-")[1]}</span></li>)}</td>
                 <td>{`${day} ${month} ${year}`}</td>
                 <td>{(Number(o.Size)/(1024 * 1024)).toFixed(3)}Mb</td>
                 <td>
